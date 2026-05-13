@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Node | Command Center</title>
+    <link id="favicon" rel="icon" type="image/png" href="https://github.com/d3add3v/Syntax-Node/blob/main/Syntax-Node-Icon.png?raw=true">
+    <style id="base-styles">
+        :root {
+            --bg-dark: #05070a;
+            --bg-card: rgba(13, 17, 23, 0.9);
+            --syntax-green: #2ea043;
+            --syntax-glow: rgba(46, 160, 67, 0.5);
+            --text-gray: #8b949e;
+            --text-white: #f0f6fc;
+            --border-dim: #30363d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(46, 160, 67, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 160, 67, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dim);
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            color: var(--syntax-green);
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        #content-shell {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.2s ease;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px var(--syntax-glow));
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .title-group h1 {
+            font-size: 3.5rem;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .title-group h1 span { color: var(--syntax-green); }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 50px;
+        }
+
+        .nav-item {
+            background: var(--bg-card);
+            padding: 30px;
+            border: 1px solid var(--border-dim);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            border-color: var(--syntax-green);
+            background: rgba(46, 160, 67, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .item-label { display: block; font-weight: bold; font-size: 1.1rem; }
+        .item-subtext { display: block; font-size: 0.75rem; color: var(--syntax-green); opacity: 0.7; margin-top: 5px; }
+
+        footer {
+            width: 100%;
+            padding: 25px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            border-top: 1px solid var(--border-dim);
+            letter-spacing: 1px;
+        }
+
+        .loading { opacity: 0.1; pointer-events: none; filter: blur(5px); }
+
+        #game-theater {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 10001;
+            flex-direction: column;
+        }
+        .theater-nav {
+            background: #0d1117;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dim);
+        }
+        #game-frame {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+    </style>
+    <style id="dynamic-styles"></style>
+</head>
+<body>
+
+    <header>
+        <div class="home-btn" onclick="returnToHome()">[ SYNTAX_NODE ]</div>
+        <div id="clock" style="font-size: 0.8rem; color: var(--text-gray);">00:00:00</div>
+    </header>
+
+    <main id="content-shell">
+        <div class="hero-container">
+            <img src="https://github.com/d3add3v/Syntax-Node/blob/main/Syntax-Node-Icon.png?raw=true" alt="Logo" class="hero-logo">
+            <div class="title-group">
+                <h1>SYNTAX<span>_NODE</span></h1>
+                <p style="text-align: center; color: var(--text-gray); font-size: 0.8rem; letter-spacing: 4px;">CORE_INTERFACE_V1.0.8</p>
+            </div>
+            <div class="nav-grid">
+                <div class="nav-item" onclick="loadPage('games.html')">
+                    <span class="item-label">DIR_GAMES</span>
+                    <span class="item-subtext">EXECUTE_BINARY_MODULES</span>
+                </div>
+                <div class="nav-item" onclick="loadPage('settings.html')">
+                    <span class="item-label">SYS_CONFIG</span>
+                    <span class="item-subtext">KERNEL_PARAMETER_ADJUST</span>
+                </div>
+                <div class="nav-item" onclick="loadPage('about.html')">
+                    <span class="item-label">SYS_INFO</span>
+                    <span class="item-subtext">PROTOCOL_DOCUMENTATION</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="game-theater">
+        <div class="theater-nav">
+            <span id="theater-title" style="color: var(--syntax-green); font-size: 0.8rem; font-family: monospace;">SESSION: IDLE</span>
+            <div onclick="closeGame()" style="color: #ff4d4d; border: 1px solid #ff4d4d; padding: 5px 15px; cursor: pointer; font-family: monospace; font-size: 0.8rem; text-transform: uppercase;">Terminate_Session [X]</div>
+        </div>
+        <iframe id="game-frame" src="about:blank"></iframe>
+    </div>
+
+    <footer>
+        &copy; 2026 SYNTAX_NODE // PERSISTENT_CLOAK_ACTIVE
+    </footer>
+
+    <script>
+        const RAW_BASE_URL = "https://raw.githubusercontent.com/d3add3v/Syntax-Node/refs/heads/main/";
+        const initialHomeContent = document.getElementById('content-shell').innerHTML;
+
+        async function loadPage(fileName) {
+            const shell = document.getElementById('content-shell');
+            const dynamicStyles = document.getElementById('dynamic-styles');
+            shell.classList.add('loading');
+            try {
+                const response = await fetch(RAW_BASE_URL + fileName);
+                const htmlString = await response.text();
+                const parser = new DOMParser();
+                const remoteDoc = parser.parseFromString(htmlString, 'text/html');
+                
+                let combinedStyles = "";
+                remoteDoc.querySelectorAll('style').forEach(s => combinedStyles += s.innerHTML);
+                dynamicStyles.innerHTML = combinedStyles;
+
+                const remoteContent = remoteDoc.querySelector('main') || remoteDoc.querySelector('body');
+                if (remoteContent) {
+                    shell.innerHTML = remoteContent.innerHTML;
+                    if (!localStorage.getItem('syntax_cloak_name')) {
+                        document.title = remoteDoc.title || "Syntax Node";
+                    }
+                }
+            } catch (err) {
+                shell.innerHTML = `<div style="text-align:center; padding:100px; color:red;">[!] CRITICAL_FETCH_ERROR: ${fileName}</div>`;
+            } finally {
+                shell.classList.remove('loading');
+                window.scrollTo(0,0);
+            }
+        }
+
+        function returnToHome() {
+            document.getElementById('dynamic-styles').innerHTML = "";
+            document.getElementById('content-shell').innerHTML = initialHomeContent;
+            const savedName = localStorage.getItem('syntax_cloak_name');
+            document.title = savedName ? savedName : "Syntax Node | Command Center";
+        }
+
+        function applyCloak(name, iconUrl) {
+            document.title = name || "Syntax Node | Command Center";
+            document.getElementById('favicon').href = iconUrl || "https://github.com/d3add3v/Syntax-Node/blob/main/Syntax-Node-Icon.png?raw=true";
+            localStorage.setItem('syntax_cloak_name', name);
+            localStorage.setItem('syntax_cloak_icon', iconUrl);
+        }
+
+        // --- NEW SPECIFIC PETEZAH LAUNCHER ---
+        async function petezahLaunch(title) {
+            await injectGame('petezah.html', `[LEGACY] ${title}`);
+        }
+
+        // --- GENERAL INJECTION ENGINE ---
+        async function injectGame(fileName, title) {
+            const theater = document.getElementById('game-theater');
+            const frame = document.getElementById('game-frame');
+            const titleDisplay = document.getElementById('theater-title');
+            
+            frame.src = "about:blank";
+            titleDisplay.innerText = "INITIALIZING: " + title.toUpperCase();
+            theater.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            try {
+                const response = await fetch(RAW_BASE_URL + fileName);
+                const htmlCode = await response.text();
+
+                setTimeout(() => {
+                    const frameDoc = frame.contentWindow.document;
+                    frameDoc.open();
+                    frameDoc.write(htmlCode);
+                    frameDoc.close();
+                    titleDisplay.innerText = "RUNNING: " + title.toUpperCase();
+                }, 100); 
+
+            } catch (err) {
+                titleDisplay.innerText = "INJECTION_FAILED";
+                console.error(err);
+            }
+        }
+
+        function closeGame() {
+            const theater = document.getElementById('game-theater');
+            const frame = document.getElementById('game-frame');
+            theater.style.display = 'none';
+            frame.src = "about:blank";
+            
+            try {
+                const frameDoc = frame.contentWindow.document;
+                frameDoc.open();
+                frameDoc.write("");
+                frameDoc.close();
+            } catch(e) {}
+
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = () => {
+            const name = localStorage.getItem('syntax_cloak_name');
+            const icon = localStorage.getItem('syntax_cloak_icon');
+            if (name) applyCloak(name, icon);
+        };
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour12: false});
+        }, 1000);
+    </script>
+</body>
+</html>

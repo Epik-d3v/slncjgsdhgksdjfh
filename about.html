@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Syntax Node | System Documentation</title>
+    <style>
+        /* These styles merge into the mainframe upon fetch */
+        .doc-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: slideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Scanning Line Effect */
+        .doc-wrapper::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: rgba(46, 160, 67, 0.2);
+            box-shadow: 0 0 10px var(--syntax-green);
+            z-index: 10;
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        .btn-return {
+            display: inline-block;
+            padding: 10px 24px;
+            border: 1px solid var(--syntax-green);
+            background: rgba(46, 160, 67, 0.05);
+            color: var(--syntax-green);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 50px;
+        }
+
+        .btn-return:hover {
+            background: var(--syntax-green);
+            color: #fff;
+            box-shadow: 0 0 20px var(--syntax-glow);
+        }
+
+        .doc-header {
+            margin-bottom: 60px;
+        }
+
+        .doc-header h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .doc-header .version-tag {
+            background: var(--syntax-green);
+            color: #000;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        /* Two-column Specs Layout */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .doc-card {
+            background: rgba(22, 27, 34, 0.5);
+            border: 1px solid var(--border-dim);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 40px; height: 40px;
+            background: linear-gradient(45deg, transparent 50%, var(--border-dim) 50%);
+        }
+
+        .doc-card h2 {
+            font-size: 0.8rem;
+            color: var(--syntax-green);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .doc-card h2 span {
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-dim);
+            margin-left: 15px;
+        }
+
+        .doc-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .data-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .data-list li {
+            font-size: 0.8rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #21262d;
+            padding-bottom: 5px;
+        }
+
+        .data-list li span {
+            color: var(--syntax-green);
+        }
+
+        .status-footer {
+            margin-top: 50px;
+            padding: 20px;
+            border: 1px solid var(--syntax-green);
+            color: var(--syntax-green);
+            font-size: 0.7rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <main class="doc-wrapper">
+        
+        <div class="btn-return" onclick="returnToHome()">
+            &lt; ESCAPE_TO_CORE
+        </div>
+
+        <header class="doc-header">
+            <h1>SYSTEM<span>_MANUAL</span> <span class="version-tag">v1.0.8</span></h1>
+            <p style="color: var(--text-gray);">Authorized access only. Terminal session active.</p>
+        </header>
+
+        <div class="specs-grid">
+            <section class="doc-card">
+                <h2>01_ARCHITECTURE <span></span></h2>
+                <p>
+                    The Syntax Node operates on a <b>Non-Linear Injection</b> framework. 
+                    Unlike traditional websites, we utilize the GitHub Raw API to stream 
+                    content directly into your browser's memory.
+                </p>
+                <ul class="data-list">
+                    <li>PROTOCOL <span>AJAX/RAW</span></li>
+                    <li>LATENCY <span>&lt; 40MS</span></li>
+                    <li>ENCRYPTION <span>AES-256-GCM</span></li>
+                </ul>
+            </section>
+
+            <section class="doc-card">
+                <h2>02_CAPABILITIES <span></span></h2>
+                <p>
+                    Designed to function within highly restricted network environments (educational, 
+                    corporate, or public). 
+                </p>
+                <ul class="data-list">
+                    <li>BYPASS_LEVEL <span>CRITICAL</span></li>
+                    <li>SCRIPTS <span>ENABLED</span></li>
+                    <li>OFF-CORE <span>ALLOWED</span></li>
+                </ul>
+            </section>
+        </div>
+
+        <section class="doc-card" style="margin-bottom: 0;">
+            <h2>03_INITIALIZATION_LOG <span></span></h2>
+            <div style="font-size: 0.8rem; color: #4ade80; font-family: monospace;">
+                [OK] Loading base_styles.css...<br>
+                [OK] Connecting to refs/heads/main...<br>
+                [OK] Handshake established via SSL...<br>
+                [OK] Shell injection successful.<br>
+                <span style="color: var(--text-white); animation: blink 1s infinite;">_</span>
+            </div>
+        </section>
+
+        <div class="status-footer">
+            End of documentation // Syntax Node Network
+        </div>
+
+    </main>
+</body>
+</html>

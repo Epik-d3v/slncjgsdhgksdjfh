@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Syntax Node | Settings</title>
+    <style>
+        .settings-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .settings-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .settings-section {
+            background: rgba(10, 12, 16, 0.95);
+            border: 1px solid var(--border-dim);
+            padding: 25px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            border-top: 3px solid var(--syntax-green);
+        }
+
+        .settings-section h2 {
+            font-size: 0.8rem;
+            color: var(--syntax-green);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-dim);
+            padding-bottom: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* Inputs & Customizing */
+        .cloak-input {
+            background: #000;
+            border: 1px solid var(--border-dim);
+            color: var(--syntax-green);
+            padding: 10px;
+            font-family: monospace;
+            width: 100%;
+            outline: none;
+        }
+
+        .cloak-input:focus { border-color: var(--syntax-green); }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-preset {
+            background: transparent;
+            border: 1px solid var(--border-dim);
+            color: var(--text-white);
+            padding: 8px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: 0.2s;
+        }
+
+        .btn-preset:hover { border-color: var(--syntax-green); color: var(--syntax-green); }
+
+        .btn-save {
+            background: var(--syntax-green);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn-reset {
+            background: transparent;
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        @media (max-width: 800px) { .settings-container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <main class="settings-wrapper">
+        <div style="margin-bottom: 20px;">
+            <button class="btn-preset" onclick="returnToHome()">[ ESCAPE_TO_CORE ]</button>
+        </div>
+
+        <div class="settings-container">
+            
+            <section class="settings-section">
+                <h2>Tab_Cloak_Engine</h2>
+                <div class="control-group">
+                    <label>Custom Tab Title</label>
+                    <input type="text" id="custom-name" class="cloak-input" placeholder="e.g. Google Docs">
+                </div>
+                <div class="control-group">
+                    <label>Custom Icon URL</label>
+                    <input type="text" id="custom-icon" class="cloak-input" placeholder="https://site.com/favicon.png">
+                </div>
+                <button class="btn-save" onclick="applyCustomCloak()">Apply Custom Cloak</button>
+
+                <label style="display:block; margin-top:20px; font-size:0.7rem; color:var(--text-gray);">OR USE PRESETS:</label>
+                <div class="preset-grid">
+                    <button class="btn-preset" onclick="setPreset('Google Classroom', 'https://ssl.gstatic.com/classroom/favicon.png')">Classroom</button>
+                    <button class="btn-preset" onclick="setPreset('Google Drive', 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png')">Drive</button>
+                    <button class="btn-preset" onclick="setPreset('Home - Canvas', 'https://du11bjcvkw-6fd17-2.sandbox.instructure.com/favicon.ico')">Canvas</button>
+                    <button class="btn-preset" onclick="setPreset('Wikipedia', 'https://en.wikipedia.org/favicon.ico')">Wikipedia</button>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>Interface_Kernel</h2>
+                <div class="control-group">
+                    <label>UI Brightness</label>
+                    <input type="range" min="50" max="150" value="100">
+                </div>
+                <div class="control-group">
+                    <label>Terminal Text Speed</label>
+                    <select class="cloak-input">
+                        <option>Instant</option>
+                        <option>Fast</option>
+                        <option>Authentic</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Visual Effects</label>
+                    <div style="font-size:0.8rem; color:var(--syntax-green);">
+                        [X] CRT Scanlines<br>
+                        [X] Motion Blur<br>
+                        [ ] Debug Mode
+                    </div>
+                </div>
+                
+                <button class="btn-reset" onclick="clearCloak()">PURGE_ALL_PREFERENCES</button>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // These interact with the 'applyCloak' function in home.html
+        function applyCustomCloak() {
+            const name = document.getElementById('custom-name').value;
+            const icon = document.getElementById('custom-icon').value;
+            if(name) applyCloak(name, icon);
+        }
+
+        function setPreset(name, icon) {
+            applyCloak(name, icon);
+        }
+
+        function clearCloak() {
+            localStorage.clear();
+            location.reload();
+        }
+    </script>
+</body>
+</html>

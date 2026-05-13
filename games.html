@@ -1,0 +1,46 @@
+<main class="games-wrapper">
+    <style>
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+        .game-card {
+            background: rgba(13, 17, 23, 0.9);
+            border: 1px solid #30363d;
+            padding: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .game-card:hover {
+            border-color: #2ea043;
+            background: rgba(46, 160, 67, 0.05);
+        }
+        .game-card h3 { color: #f0f6fc; margin-bottom: 10px; font-family: monospace; }
+        .game-card p { color: #8b949e; font-size: 0.8rem; font-family: monospace; }
+    </style>
+
+    <header style="text-align: center; border-bottom: 1px solid #30363d; padding-bottom: 20px;">
+        <h1 style="font-family: monospace; letter-spacing: 5px;">STASH<span>_RESOURCES</span></h1>
+    </header>
+
+    <div class="nav-grid">
+        <div class="game-card" onclick="petezahLaunch('Petezah v1.2')">
+            <h3>PETEZAH_LOADER</h3>
+            <p>Yeah i still dont know how to get this to fucking work. -_-</p>
+        </div>
+
+        <div class="game-card" onclick="injectGame('ugs.html', 'UGS Library')">
+            <h3>UGS_CORE</h3>
+            <p>Run the Ultimate Game Stash library in a blank buffer.</p>
+        </div>
+
+        <div class="game-card" onclick="injectGame('gust.html', 'GUST Module')">
+            <h3>GUST_SYSTEM</h3>
+            <p>Access the GUST high-speed proxy service.</p>
+        </div>
+    </div>
+</main>

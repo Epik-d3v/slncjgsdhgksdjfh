@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Node | Initializing...</title>
+    <link rel="icon" type="image/png" href="https://github.com/d3add3v/Syntax-Node/blob/main/Syntax-Node-Icon.png?raw=true">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #05070a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #2ea043;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .loader-container {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(46, 160, 67, 0.2);
+            border-top: 3px solid #2ea043;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <div class="status-text" id="status">Syncing_With_Mainframe...</div>
+    </div>
+
+    <script>
+        /**
+         * SYNTAX NODE AUTO-LOADER
+         * Points to the raw home.html on GitHub.
+         */
+        const SOURCE_URL = "https://raw.githubusercontent.com/d3add3v/Syntax-Node/refs/heads/main/home.html";
+
+        async function bootSystem() {
+            const status = document.getElementById('status');
+            
+            try {
+                // Fetch the latest home.html
+                const response = await fetch(SOURCE_URL);
+                if (!response.ok) throw new Error('CONNECTION_FAILED');
+                
+                const htmlCode = await response.text();
+
+                // Replace the entire loader page with the fetched home.html code
+                document.open();
+                document.write(htmlCode);
+                document.close();
+
+            } catch (err) {
+                console.error(err);
+                status.innerText = "CRITICAL_CONNECTION_ERROR";
+                status.style.color = "#ff4d4d";
+            }
+        }
+
+        // Delay boot slightly to show the cool loading state
+        setTimeout(bootSystem, 800);
+    </script>
+</body>
+</html>
